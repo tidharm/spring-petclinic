@@ -8,35 +8,47 @@ def genSh(cmd) {
    }
 }
 
+node('main') {
+  stage('Checkout and set agent'){
+     checkout scm
+     ### Or just use any other approach to figure out agent label: read file, etc
+     if (env.BRANCH_NAME == 'main') {
+        AGENT_LABEL = "prod"
+     } else {
+        AGENT_LABEL = "dev"
+     }
+   }
+}
+
 pipeline {
-    agent any
+    agent {
+       label "${AGENT_LABEL}"
+    }
     tools {
         maven 'Maven362'
         jdk 'JDK8'
     }
-    node {
-        stages {
-            stage ('Environment') {
-                steps {
-                    genSh '''
-                        echo "PATH: ${PATH} %PATH%"
-                        echo "M2_HOME: ${M2_HOME} %M2_HOME%"
-                        echo "JAVA_HOME: ${JAVA_HOME} %JAVA_HOME%"
-                    '''
-                }
+    stages {
+        stage ('Environment') {
+            steps {
+                genSh '''
+                    echo "PATH: ${PATH} %PATH%"
+                    echo "M2_HOME: ${M2_HOME} %M2_HOME%"
+                    echo "JAVA_HOME: ${JAVA_HOME} %JAVA_HOME%"
+                '''
             }
+        }
 
-            stage ('Build') {
-                steps {
-                    genSh 'mvn clean package dockerfile:build'
-                }
-                post {
-                    success {
-                        genSh '''
-                            echo "Run the petclinic container using the following command:"
-                            echo "docker run -d --name petclinic -p 8888:8080 tidharm/spring-petclinic:2.4.5"
-                        '''
-                    }
+        stage ('Build') {
+            steps {
+                genSh 'mvn clean package dockerfile:build'
+            }
+            post {
+                success {
+                    genSh '''
+                        echo "Run the petclinic container using the following command:"
+                        echo "docker run -d --name petclinic -p 8888:8080 tidharm/spring-petclinic:2.4.5"
+                    '''
                 }
             }
         }
