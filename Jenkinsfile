@@ -8,21 +8,8 @@ def genSh(cmd) {
    }
 }
 
-node('main') {
-  stage('Checkout and set agent'){
-     checkout scm
-     if (env.BRANCH_NAME == 'main') {
-        AGENT_LABEL = "prod"
-     } else {
-        AGENT_LABEL = "dev"
-     }
-   }
-}
-
 pipeline {
-    agent {
-       label "${AGENT_LABEL}"
-    }
+    agent { label 'main' }
     tools {
         maven 'Maven362'
         jdk 'JDK8'
