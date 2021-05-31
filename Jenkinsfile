@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage ('Environment') {
             steps {
-                sh '''
+                bat '''
                     echo "PATH: ${PATH}"
                     echo "M2_HOME: ${M2_HOME}"
                     echo "JAVA_HOME: ${JAVA_HOME}"
