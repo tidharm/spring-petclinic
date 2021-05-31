@@ -1,5 +1,6 @@
+env.UNIX = isUnix()
 def genSh(cmd) {
-    if (isUnix()) {
+    if (Boolean.valueOf(env.UNIX)) {
         sh cmd
     }
     else {
@@ -16,7 +17,7 @@ pipeline {
     stages {
         stage ('Environment') {
             steps {
-                if (isUnix()) {
+                if (Boolean.valueOf(env.UNIX)) {
                     sh '''
                         echo "PATH: ${PATH}"
                         echo "M2_HOME: ${M2_HOME}"
