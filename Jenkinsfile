@@ -1,13 +1,3 @@
-env.UNIX = isUnix()
-def genSh(cmd) {
-    if (Boolean.valueOf(env.UNIX)) {
-        sh cmd
-    }
-    else {
-        bat cmd
-   }
-}
-
 pipeline {
     agent { label 'main' }
     tools {
@@ -17,7 +7,7 @@ pipeline {
     stages {
         stage ('Environment') {
             steps {
-                genSh '''
+                bat '''
                     echo "PATH: ${PATH} %PATH%"
                     echo "M2_HOME: ${M2_HOME} %M2_HOME%"
                     echo "JAVA_HOME: ${JAVA_HOME} %JAVA_HOME%"
@@ -27,11 +17,11 @@ pipeline {
 
         stage ('Build') {
             steps {
-                genSh 'mvn clean package dockerfile:build'
+                bat 'mvn clean package dockerfile:build'
             }
             post {
                 success {
-                    genSh '''
+                    bat '''
                         echo "Run the petclinic container using the following command:"
                         echo "docker run -d --name petclinic -p 8888:8080 tidharm/spring-petclinic:2.4.5"
                     '''
