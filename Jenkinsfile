@@ -17,20 +17,11 @@ pipeline {
     stages {
         stage ('Environment') {
             steps {
-                if (Boolean.valueOf(env.UNIX)) {
-                    sh '''
-                        echo "PATH: ${PATH}"
-                        echo "M2_HOME: ${M2_HOME}"
-                        echo "JAVA_HOME: ${JAVA_HOME}"
-                    '''
-                }
-                else {
-                    bat '''
-                        echo PATH: %PATH%
-                        echo M2_HOME: %M2_HOME%
-                        echo JAVA_HOME: %JAVA_HOME
-                    '''
-                }
+                genSh '''
+                    echo "PATH: ${PATH} %PATH%"
+                    echo "M2_HOME: ${M2_HOME} %M2_HOME%"
+                    echo "JAVA_HOME: ${JAVA_HOME} %JAVA_HOME%"
+                '''
             }
         }
 
