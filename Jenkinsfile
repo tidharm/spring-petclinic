@@ -11,7 +11,6 @@ def genSh(cmd) {
 node('main') {
   stage('Checkout and set agent'){
      checkout scm
-     ### Or just use any other approach to figure out agent label: read file, etc
      if (env.BRANCH_NAME == 'main') {
         AGENT_LABEL = "prod"
      } else {
