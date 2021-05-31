@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'Maven 3.6.2'
-        jdk 'jdk8'
+        jdk 'JDK8'
     }
     stages {
         stage ('Environment') {
@@ -22,9 +22,9 @@ pipeline {
             post {
                 success {
                     sh '''
-					              echo "Run the petclinic container using the following command:"
-						            echo "docker run -d --name petclinic -p 8888:8080 tidharm/spring-petclinic:2.4.5"
-					          '''
+                        echo "Run the petclinic container using the following command:"
+                        echo "docker run -d --name petclinic -p 8888:8080 tidharm/spring-petclinic:2.4.5"
+                    '''
                 }
             }
         }
