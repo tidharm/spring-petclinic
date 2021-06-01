@@ -17,7 +17,7 @@ pipeline {
 
         stage ('Build') {
             steps {
-                bat 'mvn clean package dockerfile:build'
+                bat 'mvn clean package dockerfile:build dockerfile:push'
             }
             post {
                 success {
