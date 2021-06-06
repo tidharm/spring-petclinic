@@ -44,8 +44,11 @@ If port 8080 is already taken on your host, you can choose any other port by mod
     1. Under **Script Path**, enter `Jenkinsfile` (the Jenkinsfile is located in the repository root)
 1. Click **Save**
 
-### Accessing the image
-TBD
+### Accessing the Image's tarball
+Depending on your setup, the `tidharm/spring-petclinic` image will be stored in the root of your Jenkins pipeline workspace.  
+File naming convention:  
+**Linux:**   `tidharm-spring-petclinic-2.4.5.tar.gz`  
+**Windows:** `tidharm_spring-petclinic_2.4.5.tar.gz`  
 
 # License
 
