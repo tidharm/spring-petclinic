@@ -17,7 +17,7 @@ pipeline {
 
         stage ('Build') {
             steps {
-                bat 'mvn clean package dockerfile:build -skipTests'
+                bat 'mvn clean package dockerfile:build -DskipTests'
             }
             post {
                 success {
