@@ -17,12 +17,12 @@ pipeline {
 
         stage ('Build') {
             steps {
-                bat 'mvn clean package dockerfile:build'
+                bat 'mvn clean package dockerfile:build -skipTests'
             }
             post {
                 success {
                     bat '''
-                        for /F "tokens=* USEBACKQ" %F in (`docker image ls -f "reference=tidharm/spring-petclinic" -q`) do (set imageId=%F)
+                        for /F "tokens=* USEBACKQ" %%F in (`docker image ls -f "reference=tidharm/spring-petclinic" -q`) do (set imageId=%%F)
                         docker image save %imageId% -o "tidharm_spring-petclinic_2.4.5.tar.gz"
                     '''
                     bat '''
